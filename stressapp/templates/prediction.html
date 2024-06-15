@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction</title>
+    <link rel="stylesheet" href="{% static 'css/model.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <form id="predictionForm" method="post">
+        {% csrf_token %}
+        <div class="split-container">
+            <div class="split left">
+                <div class="centered">
+                    <div class="box">
+                        <h2>Snoring Rate</h2>
+                        <div class="range2">
+                            <input type="range" class="range" value="0" min="30" max="100" step="0.1" oninput="rangeSlider(this)">
+                            <span id="rangeValue" contenteditable="true" oninput="updateSlider(this)">30</span>
+                            <input type="hidden" class="hidden-value" name="snoring_rate" value="30">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h2>Respiration Rate</h2>
+                        <div class="range2">
+                            <input type="range" class="range" value="0" min="15" max="30" step="0.1" oninput="rangeSlider(this)">
+                            <span id="rangeValue" contenteditable="true" oninput="updateSlider(this)">15</span>
+                            <input type="hidden" class="hidden-value" name="respiration_rate" value="15">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h2>Body Temperature</h2>
+                        <div class="range2">
+                            <input type="range" class="range" value="0" min="85" max="100" step="0.1" oninput="rangeSlider(this)">
+                            <span id="rangeValue" contenteditable="true" oninput="updateSlider(this)">85</span>
+                            <input type="hidden" class="hidden-value" name="body_temperature" value="85">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h2>Limb Movement</h2>
+                        <div class="range2">
+                            <input type="range" class="range" value="0" min="0" max="20" step="0.1" oninput="rangeSlider(this)">
+                            <span id="rangeValue" contenteditable="true" oninput="updateSlider(this)">0</span>
+                            <input type="hidden" class="hidden-value" name="limb_movement" value="0">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h2>Blood Oxygen</h2>
+                        <div class="range2">
+                            <input type="range" class="range" value="0" min="80" max="100" step="0.1" oninput=rangeSlider(this)>
+                            <span id="rangeValue" contenteditable="true" oninput="updateSlider(this)">80</span>
+                            <input type="hidden" class="hidden-value" name="blood_oxygen" value="80">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h2>Eye Movement</h2>
+                        <div class="range2">
+                            <input type="range" class="range" value="0" min="60" max="110" step="0.1" oninput="rangeSlider(this)">
+                            <span id="rangeValue" contenteditable="true" oninput="updateSlider(this)">60</span>
+                            <input type="hidden" class="hidden-value" name="eye_movement" value="60">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h2>Sleeping Hours</h2>
+                        <div class="range2">
+                            <input type="range" class="range" value="0" min="0" max="12" step="0.1" oninput="rangeSlider(this)">
+                            <span id="rangeValue" contenteditable="true" oninput="updateSlider(this)">0</span>
+                            <input type="hidden" class="hidden-value" name="sleeping_hours" value="0">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h2>Heart Rate</h2>
+                        <div class="range2">
+                            <input type="range" class="range" value="0" min="50" max="100" step="0.1" oninput="rangeSlider(this)">
+                            <span id="rangeValue" contenteditable="true" oninput="updateSlider(this)">50</span>
+                            <input type="hidden" class="hidden-value" name="heart_rate" value="50">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="split right" >
+                <div class="centered">
+                    <button type="submit" class="button">Predict</button>
+                    <button type="button" class="button" onclick="clearSliders()">Clear</button>
+                    <div class="prediction-box" id="predictionBox">Prediction:
+                        {% if prediction == 0.0 %}
+                            Low/Normal
+                        {% elif prediction == 1.0 %}
+                            Medium Low
+                        {% elif prediction == 2.0 %}
+                            Medium
+                        {% elif prediction == 3.0 %}
+                            Medium High
+                        {% elif prediction == 4.0 %}
+                            High
+                        {% endif %}
+                    </div>
+                    <h2 class="recommend">Recommendations</h2>
+                    <div class="recommendations-box">
+                        <ul style="list-style-type: disc; text-align:left">
+                            {% for item in recommendation %}
+                                <li style='margin-bottom:13px'>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div style="width: 100%; height: 50vh; display: flex; justify-content: center; align-items: end;">
+                    <a href="/stress/logout" style="display: inline-block; padding: 8px 16px; text-decoration: none; color: #00204a; background-color: transparent; border: 2px solid #00204a; border-radius: 24px; transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='#00204a'; this.style.color='#fff';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#00204a';">Logout</a>
+
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+    function rangeSlider(input){
+        var value = input.value;
+        var span = input.parentElement.querySelector('#rangeValue');
+        span.innerHTML = value;
+        var hiddenInput = input.parentElement.querySelector('.hidden-value');
+        hiddenInput.value = value;  // Update the hidden input value
+    }
+    function updateSlider(span){
+        var value = span.innerHTML;
+        var slider = span.parentElement.querySelector('.range');
+        slider.value = value;
+        var hiddenInput = span.parentElement.querySelector('.hidden-value');
+        hiddenInput.value = value;  // Update the hidden input value
+    }
+    function clearSliders(){
+        var sliders = document.querySelectorAll('.range');
+        sliders.forEach(function(slider){
+            slider.value = slider.min;
+            slider.nextElementSibling.innerHTML = slider.min;
+            var hiddenInput = slider.parentElement.querySelector('.hidden-value');
+            hiddenInput.value = slider.min;  // Update the hidden input value
+        });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    color: rgb(0, 0, 0);
+}
+
+.split-container {
+    display: flex;
+    height: 100vh;
+}
+
+.split {
+    width: 50%;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.left {
+    background-color: #ffffff;
+}
+
+.right {
+    background-color: rgb(255, 255, 255);
+}
+
+.centered {
+    text-align: center;
+}
+
+.box{
+    margin: 20px;
+    padding: 15px;
+    background: linear-gradient(to bottom,rgba(0,0,0,0.05),#edf1f4);
+    border-radius: 40px;
+    box-shadow: 15px 15px 20px rgba(0,0,0,0.1),
+    -15px -15px 20px #fff;
+}
+
+.range{
+    width: 400px;
+    height: 15px;
+    appearance: none;
+    background: #edf1f4;
+    outline: none;
+    border-radius: 15px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.1),
+    -5px -5px 10px #fff,
+    inset 5px 5px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.range::-webkit-slider-thumb{
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    border-radius: 50%;
+    border: 2px solid #0074cf;
+    box-shadow: -407px 0 0 400px #27a0ff;
+    cursor: pointer;
+}
+
+#rangeValue{
+    text-align: center;
+    width: 60px;
+    font-size: 1.25em;
+    color: #fff;
+    background: #27a0ff;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 25px;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.1),
+    -5px -5px 10px #fff,
+    inset 5px 5px 10px rgba(0,0,0,0.1),
+    inset -5px -5px 5px rgba(255,255,255,0.25);
+}
+
+.button{
+    width: 45%;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #f4511e;
+    border: none;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    opacity: 0.6;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.botton:hover {opacity: 1}
+
+.prediction-box {
+    margin-top: 20px;
+    padding: 20px;
+    width: 90%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.recommend {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+}
+
+.recommendations-box {
+    margin-top: 20px;
+    padding: 20px;
+    width: 85%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    text-align: center; /* Center the text horizontally */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.recommendations-box ul {
+    list-style-type: none; /* Remove default list styles */
+    padding: 0;
+}
+
+.recommendations-box ul li {
+    margin-bottom: 10px;
+}

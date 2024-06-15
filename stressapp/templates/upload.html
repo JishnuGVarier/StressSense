@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSV File Upload</title>
+</head>
+<body>
+<div class="container">
+    <h1>Upload CSV File</h1>
+    <form id="upload-form">
+        <label id="file-label" for="file-upload" class="btn">Choose File</label>
+        <input id="file-upload" type="file" class="file-input" accept=".csv" required>
+        <div id="file-name"></div>
+        <button type="submit" class="btn">Upload</button>
+    </form>
+</div>
+<script>
+    const form = document.getElementById('upload-form');
+    const fileInput = document.getElementById('file-upload');
+    const fileNameContainer = document.getElementById('file-name');
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (file && file.name.endsWith('.csv')) {
+            fileNameContainer.textContent = file.name;
+        } else {
+            fileNameContainer.textContent = 'Please choose a CSV file.';
+            fileInput.value = ''; // Clear the file input
+        }
+    });
+
+    form.addEventListener('submit', (e) => {
+        const file = fileInput.files[0];
+        if (!file || !file.name.endsWith('.csv')) {
+            alert('Please choose a CSV file.');
+            e.preventDefault(); // Prevent form submission
+        }
+    });
+</script>
+</body>
+</html>
